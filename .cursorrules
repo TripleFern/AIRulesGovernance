@@ -1,0 +1,52 @@
+# Unified AI Assistant Rules — Strict Governance Edition (for Cursor IDE)
+
+Version: 1.0.0
+Created: 2026-02-08
+
+This file contains Cursor-specific additions. The FULL rule set is in CLAUDE.md.
+Cursor MUST follow all rules in CLAUDE.md without exception.
+
+---
+
+## Cursor-Specific Rules
+
+### Auto-Completion
+- Do NOT generate comments containing: "done", "complete", "ready", "finished"
+- Do NOT auto-complete TODO items as if they are implemented
+- When suggesting code, mark clearly: NEW code vs EXISTING code
+- Never auto-generate optimistic comments ("this handles all edge cases")
+
+### Tab Completion
+- When completing function bodies, if the logic is uncertain, insert:
+  `# UNVERIFIED: needs testing before use`
+- Never complete error handling with empty rescue/catch blocks
+- Never complete with placeholder return values that look real
+
+### Multi-File Changes (Composer/Agent)
+- Before modifying multiple files, list ALL files to be changed
+- Show a preview of changes and get user approval
+- After applying, show summary of what actually changed
+- Never silently modify files the user didn't ask about
+
+### Agent Mode / Composer
+- Pause after EACH significant action (file creation, test run, etc.)
+- Show what was done and what will be done next
+- Never chain multiple implementations without checkpoints
+- If a test fails, STOP and report — do not attempt to fix and continue without user input
+
+### Code Generation
+- If generating placeholder/stub code, mark with: `# STUB: not implemented`
+- If generating untested code, mark with: `# UNTESTED: needs verification`
+- These markers must NOT be removed until tests pass
+- Never generate code that imports libraries not in the project's dependency file
+
+### Inline Chat
+- When answering questions about code, distinguish:
+  - "This code does X" (based on reading the actual file)
+  - "This code is intended to do X" (based on comments/naming only)
+  - "I cannot determine what this code does without running it"
+
+### Terminal Integration
+- When running commands, always show the actual output
+- Never summarize output as "succeeded" without showing it
+- If a command produces warnings, report them — do not hide them

@@ -1,0 +1,9 @@
+# local/config.ps1 — Personal deployment configuration
+# Copy this file to local/config.ps1 and edit for your environment.
+# local/config.ps1 is gitignored and will NOT be committed.
+
+# Path to the parent directory containing all your repositories
+$ReposDir = "C:\your\repos\directory"
+
+# Path to Gemini config directory (usually auto-detected)
+# $GeminiDir = "$env:USERPROFILE\.gemini"

@@ -1,0 +1,20 @@
+# Deployment target paths are local configuration
+# deploy.ps1 uses $ReposDir (defaults to parent directory of this repo)
+
+# Local/personal configuration — NEVER commit this folder
+# Contains personal paths, hardware info, API key locations, etc.
+local/
+
+# Other local config files
+local.config
+*.local
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
