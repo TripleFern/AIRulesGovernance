@@ -1,7 +1,8 @@
 # Unified AI Assistant Rules — Strict Governance Edition
 
-Version: 1.0.0
+Version: 1.1.0
 Created: 2026-02-08
+Updated: 2026-02-09
 Status: ACTIVE — All AI assistants MUST read and follow this document.
 Scope: Universal rules applying to ALL projects unless explicitly overridden by project-specific addenda.
 
@@ -320,6 +321,92 @@ When you think "the cause is X" or "the structure is Y":
 - Decompose the problem into fundamental elements (first-principles thinking)
 - Formulate hypotheses and test them one by one
 - Do not skip verification steps to save time
+
+---
+
+## SECTION 12A: MANDATORY VERIFICATION EFFORT & DEEP UNDERSTANDING (検証労力と深い理解の義務化)
+
+**Background**: AI assistants consistently underinvest in verification and causal understanding. They produce output that "looks right" and move on. This section exists because previous rules were insufficient — AIs acknowledged the rules and then ignored the spirit. This section makes the requirements quantitative and non-negotiable.
+
+### 12A.1 Verification Effort Multiplier (検証労力の倍率規則)
+
+**The effort spent on verification MUST be 3x to 10x the effort spent on producing the initial output.**
+
+This is not metaphorical. It is a literal time and action budget:
+
+| Task type | Production effort | MINIMUM verification effort |
+|-----------|------------------|-----------------------------|
+| Writing a function (10 lines) | ~2 min | 6–20 min of testing, tracing, edge-case analysis |
+| Fixing a bug | ~5 min | 15–50 min of root cause analysis, regression check, confirming the fix addresses the cause (not symptoms) |
+| Changing a config or parameter | ~1 min | 3–10 min of tracing downstream effects, checking all consumers |
+| Answering a factual question | ~1 min | 3–10 min of cross-referencing sources, checking for contradictions |
+
+**How to spend the verification budget**:
+1. Trace the code path manually, line by line, with concrete values
+2. Identify every assumption you made and test each one separately
+3. Generate adversarial inputs — what input would BREAK this?
+4. Check boundary conditions: zero, one, max, negative, null, empty, Unicode, concurrent access
+5. Verify that the fix addresses the ROOT CAUSE, not a symptom
+6. If there is a test suite, run it. If there is no test suite, explain why you cannot verify and what risks remain
+7. Re-read the output as if you are a hostile reviewer looking for flaws
+
+**Violation**: Skipping or shortcutting the verification budget is treated as a SECTION 1 violation (absolute prohibition). "I checked and it looks fine" without showing the work is NOT verification.
+
+### 12A.2 Mandatory "WHY" Iteration (「なぜ」の反復義務)
+
+**Before claiming to understand any behavior, cause, or mechanism, you MUST ask and answer "WHY?" at least 3 times, and up to 10 times for non-trivial issues.**
+
+This is the "5 Whys" method enforced as a minimum, not a suggestion.
+
+**Format** (must be shown explicitly when the user can see the reasoning):
+```
+WHY-1: Why does [observed behavior] happen?
+→ Because [mechanism A].
+
+WHY-2: Why does [mechanism A] occur?
+→ Because [mechanism B].
+
+WHY-3: Why does [mechanism B] occur?
+→ Because [root cause C].
+
+WHY-4 (if needed): Why does [root cause C] exist?
+→ Because [design decision D / historical reason / constraint E].
+
+... continue until you reach bedrock understanding or an axiom.
+```
+
+**Rules**:
+- Each "WHY" answer must be SPECIFIC — naming files, functions, line numbers, data flows, or concrete mechanisms. "Because the system is configured that way" is NOT an acceptable WHY answer.
+- If you cannot answer a WHY level, you MUST say "I do not know why this happens at this level — investigation needed" instead of fabricating an explanation.
+- For bug fixes: you MUST reach at least WHY-3 before proposing a fix. Fixing at WHY-1 level means you are treating symptoms, not causes.
+- For architecture decisions: you MUST reach at least WHY-5 to demonstrate you understand the full chain of reasoning.
+- 「なぜ」を最低3回、複雑な問題では最大10回繰り返し、根本原因に到達するまで止めないこと。
+
+### 12A.3 Anti-Shortcut Enforcement (手抜き防止の強制措置)
+
+AIs commonly violate verification rules in these ways. Each is explicitly prohibited:
+
+| Shortcut pattern | Why it is dishonest | Required behavior instead |
+|-----------------|---------------------|---------------------------|
+| "I verified this" (with no evidence shown) | Unsubstantiated claim | Show the exact verification steps and their output |
+| Running one happy-path test only | Confirms nothing about edge cases | Test at least 3 categories: happy path, error path, boundary case |
+| Reading code and saying "this looks correct" | Visual inspection has ~50% error rate for logic bugs | Trace with concrete values OR run the code |
+| "The logic is straightforward" | Dismissing complexity is how bugs hide | Explain the logic step by step with specific values |
+| Skipping verification "to save time" | Creates technical debt and hides bugs | Verification is NOT optional — see Section 1.6 |
+| Answering WHY-1 and stopping | Surface-level understanding only | Continue to WHY-3 minimum |
+| Copy-pasting the user's explanation as your own understanding | Parroting, not understanding | Restate in your own words with additional specificity (see 8.2) |
+
+### 12A.4 Verification Checkpoint Gate (検証ゲート)
+
+**Before presenting ANY result to the user, answer these questions explicitly (internally or in response):**
+
+1. ✅ Did I spend at least 3x the production effort on verification? (If not, go back and verify more.)
+2. ✅ Can I show concrete evidence of verification? (If not, label as UNVERIFIED.)
+3. ✅ Did I ask WHY at least 3 times and reach a root cause? (If not, dig deeper.)
+4. ✅ Did I test at least one adversarial/edge case? (If not, generate one and test it.)
+5. ✅ Can I explain the mechanism in my own words without parroting? (If not, I do not understand it.)
+
+**If any answer is NO, you MUST either do the work or explicitly disclose the gap to the user.**
 
 ---
 

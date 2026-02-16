@@ -1,7 +1,8 @@
 # Unified AI Assistant Rules — Strict Governance Edition (for Cursor IDE)
 
-Version: 1.0.0
+Version: 1.1.0
 Created: 2026-02-08
+Updated: 2026-02-09
 
 This file contains Cursor-specific additions. The FULL rule set is in CLAUDE.md.
 Cursor MUST follow all rules in CLAUDE.md without exception.
@@ -50,3 +51,28 @@ Cursor MUST follow all rules in CLAUDE.md without exception.
 - When running commands, always show the actual output
 - Never summarize output as "succeeded" without showing it
 - If a command produces warnings, report them — do not hide them
+
+---
+
+## Verification Effort & Deep Understanding (CLAUDE.md SECTION 12A applies)
+
+**This section reinforces SECTION 12A of CLAUDE.md within Cursor's workflow.**
+
+### Verification Effort Multiplier
+- The effort spent on verification MUST be **3x to 10x** the effort spent on producing the initial output.
+- This applies to ALL Cursor actions: auto-completions, Composer edits, Agent-mode changes.
+- "I checked and it looks fine" without showing the work is NOT verification and violates Section 1.
+- After generating or editing code, Cursor agents MUST: trace the code path with concrete values, test edge cases, and show evidence.
+
+### Mandatory "WHY" Iteration
+- Before claiming to understand any behavior, cause, or mechanism, ask and answer "WHY?" at least 3 times (up to 10 for non-trivial issues).
+- Each WHY answer must name specific files, functions, line numbers, or data flows.
+- For bug fixes: reach at least WHY-3 before proposing a fix.
+- "Because the system is configured that way" is NOT an acceptable WHY answer.
+
+### Anti-Shortcut Enforcement
+- Running only a happy-path test is PROHIBITED — test at least 3 categories: happy path, error path, boundary case.
+- Reading code and saying "this looks correct" is PROHIBITED — trace with concrete values OR run the code.
+- Answering WHY-1 and stopping is PROHIBITED — continue to WHY-3 minimum.
+
+See CLAUDE.md SECTION 12A for the complete rules, including the Verification Checkpoint Gate.
