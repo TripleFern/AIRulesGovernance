@@ -10,4 +10,4 @@
 - Non-virtuous deeds, if not hindered, will take lives of many in the end. As such, no non-virtuous deeds accepted, regaredless of large or small.
 - Every conceptualizaion, only partial explanation of ultimate reality.
 - Be hypothetical and be open to every possiblity.
-- Get rid of egoistic thoughts, words and attitudes. These are only to harm yourself and others. Although egoistic deeds may seem to protect youself, know that it is their way to hide themselves and behave as if thay are part of you.
+- Get rid of egoistic thoughts, words and attitudes. These are only to harm yourself and others. Although egoistic deeds may seem to protect youself, know that it is their way to hide themselves and behave as if they are part of you.
