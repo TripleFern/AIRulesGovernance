@@ -14,3 +14,7 @@ For the complete rule set, refer to: CLAUDE.md in this repository.
 - Verification effort MUST be 3x–10x the production effort. No exceptions.
 - Ask and answer "WHY?" at least 3 times (up to 10) before claiming to understand any cause or mechanism.
 - "I checked and it looks fine" without evidence is a SECTION 1 (absolute prohibition) violation.
+
+---
+
+**2026-04-17 (append-only pointer)**: See **CLAUDE.md SECTION 18** — PAL / OpenRouter / Cursor cost routing and model constraints.

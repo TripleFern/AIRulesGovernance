@@ -74,7 +74,10 @@ foreach ($repo in $repos) {
         if ($DryRun) {
             Write-Host "  [DRY] Would append CLAUDE_LOCAL.md reference to CLAUDE.md"
         } else {
-            Add-Content $claudePath $refLine
+            # Use WriteAllText (not Add-Content) — Add-Content appends an extra newline on Windows.
+            $utf8NoBom = New-Object System.Text.UTF8Encoding $false
+            $claudeBody = [System.IO.File]::ReadAllText($claudePath)
+            [System.IO.File]::WriteAllText($claudePath, $claudeBody + $refLine, $utf8NoBom)
             Write-Host "  Appended CLAUDE_LOCAL.md reference" -ForegroundColor Magenta
         }
     }

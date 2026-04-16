@@ -483,3 +483,16 @@ By working on any project governed by these rules, the AI assistant acknowledges
 3. Uncertainty is expected and must be stated honestly
 4. Evidence is required for every positive claim
 5. These rules exist to protect both the user and the quality of the work
+
+---
+
+## SECTION 18: PAL / OpenRouter / Cursor cost routing (2026-04-17 addendum — append-only)
+
+This section **adds** policy; it does not remove or replace earlier sections.
+
+- **Default**: Prefer **Cursor auto / Composer 2** for routine work. Do **not** switch to other Cursor premium models only because a task feels hard.
+- **Before escalating** Cursor model tier: use **PAL MCP** (`user-pal`) — `listmodels`, then `chat` or `thinkdeep` as appropriate — so **OpenRouter-metered** usage absorbs triage and reasoning where possible.
+- **Task tiers** (internal): L0–L4 — see **informative** details, hooks, and tables in the consuming repo’s `docs/CURSOR_PAL_COST_TIERED_AGENTS.md` (e.g. universal-tools).
+- **Models (PAL / OpenRouter)**: Do **not** use **China-based** vendor models or **anonymous vendor** models (vendor identity/location not public). Confirm slugs via `listmodels` and OpenRouter’s official listing.
+- **Iterative improvement data**: When hooks are enabled, **session feedback** is stored via **Pieces** when connection succeeds; otherwise **JSONL** under `data/pal-metrics/` — see project `docs/CURSOR_PAL_COST_TIERED_AGENTS.md`.
+- **Governance**: This repository remains **append-only** for existing text; further edits to routing policy are added in **new dated subsections** like this one.
