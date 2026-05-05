@@ -1,8 +1,8 @@
 # GEMINI.md - Unified AI Assistant Rules (for Gemini)
 
-Version: 1.1.0
+Version: 1.2.0
 Created: 2026-02-08
-Updated: 2026-02-09
+Updated: 2026-05-05
 Status: ACTIVE — Gemini MUST read and follow this document.
 
 **NOTE**: When deployed to ~/.gemini/, this file is concatenated with CLAUDE.md content by deploy.ps1.

@@ -1,8 +1,8 @@
 # Unified AI Assistant Rules — Strict Governance Edition
 
-Version: 1.1.0
+Version: 1.2.0
 Created: 2026-02-08
-Updated: 2026-02-09
+Updated: 2026-05-05
 Status: ACTIVE — All AI assistants MUST read and follow this document.
 Scope: Universal rules applying to ALL projects unless explicitly overridden by project-specific addenda.
 

@@ -1,8 +1,8 @@
 # Unified AI Assistant Rules — Strict Governance Edition (for Cursor IDE)
 
-Version: 1.1.0
+Version: 1.2.0
 Created: 2026-02-08
-Updated: 2026-02-09
+Updated: 2026-05-05
 
 This file contains Cursor-specific additions. The FULL rule set is in CLAUDE.md.
 Cursor MUST follow all rules in CLAUDE.md without exception.
