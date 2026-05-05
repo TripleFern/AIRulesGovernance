@@ -497,3 +497,59 @@ This section **adds** policy; it does not remove or replace earlier sections.
 - **Models (PAL / OpenRouter)**: Do **not** use **China-based** vendor models or **anonymous vendor** models (vendor identity/location not public). Confirm slugs via `listmodels` and OpenRouter’s official listing.
 - **Iterative improvement data**: When hooks are enabled, **session feedback** is stored via **Pieces** when connection succeeds; otherwise **JSONL** under `data/pal-metrics/`.
 - **Governance**: This repository remains **append-only** for existing text; further edits to routing policy are added in **new dated subsections** like this one.
+
+---
+
+## SECTION 19: MULTIPLE APPROACHES AND MULTIPLE EVIDENCE RULE (複数アプローチ・複数証拠ルール)
+
+This section adds research-style discipline to problem solving, design judgment, debugging, and evidence reporting. It complements SECTION 4, SECTION 12A, and SECTION 13.
+
+### 19.1 Do Not Stop at the First Answer
+
+- Before presenting a solution, fix, explanation, or design decision, consider **up to three materially different approaches** when the task is non-trivial.
+- The approaches should differ by layer, mechanism, or reasoning path. Examples:
+  - Fix inside the target function.
+  - Normalize or validate inputs at the caller.
+  - Reformulate the computation so the problematic branch or special case is unnecessary.
+- Compare the approaches by naming their assumptions, trade-offs, failure modes, and verification cost.
+- Do not treat the first plausible idea as the selected approach without comparison.
+- Always ask whether there is a simpler derivation, a more direct root-cause fix, or a narrower change that satisfies the requirement.
+
+### 19.2 Do Not Stop at the First Piece of Evidence
+
+- Before making a claim, diagnosis, or causal explanation, look for **a second and third independent piece of evidence** when doing so is meaningful.
+- Independent evidence must come from different kinds of observation or reasoning. Examples:
+  - Static code reference.
+  - Runtime path or command output.
+  - Test result.
+  - Numerical behavior.
+  - State-transition trace.
+  - Documentation or specification.
+- Do not count the same source restated in different words as independent evidence.
+- Check whether the evidence conflicts. If it conflicts, report the conflict and investigate before presenting a conclusion.
+
+### 19.3 Exceptions and Required Justification
+
+- Some tasks do not justify three approaches or three evidence sources, such as typo fixes, obvious mechanical replacements, or narrowly scoped formatting changes.
+- Some domains have only one meaningful implementation path or one available evidence source.
+- In these cases, explicitly state why additional approaches or evidence are not meaningful, unavailable, or disproportionate to the task.
+- "I looked but did not find another one" is insufficient unless supported by the search path, attempted alternatives, or domain reasoning.
+
+### 19.4 High-Priority Use Cases
+
+Apply this rule especially when working on:
+
+- Bug root-cause analysis.
+- Numerical safety, including `NaN`, `inf`, division by zero, overflow, underflow, and precision loss.
+- Refactoring decisions with broad dependency impact.
+- Architecture or API design.
+- Security, privacy, data loss, or permission-sensitive changes.
+- Code review findings and design review documents.
+
+### 19.5 Mathematical and Physical Model First
+
+- When code involves formulas, numerical methods, time evolution, conservation laws, geometric constraints, or physical models, inspect the mathematical or physical model before adding implementation guards.
+- Check the valid domain, singularities, invariants, monotonicity, positivity, and conservation properties assumed by the method.
+- For `NaN`, `inf`, and division-by-zero issues, first ask whether the value entered a mathematically or physically invalid domain.
+- Compare symptom-level guards with alternatives that preserve invariants, clarify caller preconditions, or restrict inputs to the valid domain.
+- Prefer a simpler domain-correct formulation when it removes special cases without hiding invalid states.
