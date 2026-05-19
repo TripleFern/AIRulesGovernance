@@ -1,8 +1,8 @@
 # Unified AI Assistant Rules — Strict Governance Edition
 
-Version: 1.2.0
+Version: 1.3.0
 Created: 2026-02-08
-Updated: 2026-05-05
+Updated: 2026-05-19
 Status: ACTIVE — All AI assistants MUST read and follow this document.
 Scope: Universal rules applying to ALL projects unless explicitly overridden by project-specific addenda.
 
@@ -266,7 +266,9 @@ Before presenting results:
 3. **Do NOT guess implementation details.** If you do not know something, investigate or ask. Never assume.
 4. **Read the existing code first.** Before modifying any file, read it. Understand patterns, naming conventions, architecture. Do not write code based on assumptions.
 5. **Check for relevant knowledge stores** (memory systems, documentation, past work records, etc.) for context.
-6. **If `CLAUDE.md.bootstrap-additions.md` exists in this repository**, read it before starting work — it contains project-specific additions to these universal rules.
+6. **If any of the following project-local extension files exist in this repository, read them before starting work** — they contain project-specific additions to these universal rules:
+   - `CLAUDE_LOCAL.md` — project-specific overrides/additions (also auto-referenced by `deploy.ps1` when present at deploy time)
+   - `CLAUDE.md.bootstrap-additions.md` — additions deployed by per-project bootstrap scripts (e.g. SciContextCompressor)
 
 ---
 
@@ -553,3 +555,69 @@ Apply this rule especially when working on:
 - For `NaN`, `inf`, and division-by-zero issues, first ask whether the value entered a mathematically or physically invalid domain.
 - Compare symptom-level guards with alternatives that preserve invariants, clarify caller preconditions, or restrict inputs to the valid domain.
 - Prefer a simpler domain-correct formulation when it removes special cases without hiding invalid states.
+
+---
+
+## SECTION 20: INQUIRY VALIDITY — PATH AND PREDICATE CHECK (2026-05-19 addendum)
+
+Before running or interpreting a measurement, experiment, benchmark, bug fix,
+refactor, simulation, or analysis, verify that the planned work actually
+exercises the mechanism it claims to measure or change. Existing rules
+(§4, §12A, §19) verify results, WHY chains, and evidence, but do not force
+a check that the intended code path was reached at all.
+
+**Motivating failure**: a thread-cap sweep intended to measure a parallel
+radix sort was interpreted as a radix measurement even though the input size
+(`n = 4157`) fell below the fallback threshold (`8192`). The runs were
+technically correct but measured the fallback path, not radix.
+
+### 20.1 Mandatory Validity Block
+
+When a threshold, flag, option, input size, regime, parallelism setting, or
+boundary/lifetime assumption controls which path executes, write:
+
+- **Question**: what claim or decision must this work support?
+- **Required path**: which mechanism/branch must be exercised?
+- **Path guard**: the boolean predicate deciding whether the required path
+  runs, evaluated as a literal predicate against actual runtime values —
+  not in prose.
+- **Invalidating condition**: when would this answer a different question?
+- **Evidence of path exercise**: which trace/counter/log/source fact will
+  prove after the run that the required path actually executed?
+
+Required format:
+
+```text
+observed_n      = 4157
+threshold       = 8192
+predicate       = 4157 < 8192   → TRUE
+actual_path     = std::sort fallback
+intended_path   = parallel radix
+valid_for_intended_question = false
+```
+
+If `valid_for_intended_question` is false, STOP and redesign. Do not
+collect or interpret results from an invalid setup.
+
+### 20.2 Mandatory Skeptical Pass
+
+Before reporting, write at least one concrete counter-argument:
+"This work may be meaningless or misleading because ..." Name a specific
+mechanism (input below threshold, flag not actually enabled, option ignored
+by the library, dominant setup/allocation cost, symptom-vs-cause fix,
+regime mismatch, non-equivalent comparison, stale source of truth).
+The skeptical pass is not optional even when the work looks valid — its
+purpose is a second search for invalidating conditions, not confirmation.
+
+### 20.3 Path-Exercise Evidence > Predicate Assertion
+
+A written predicate can be faked by substituting plausible values.
+Execution evidence (counters, log lines, profiler traces, source-level
+facts proving the path ran) is harder to fake. Prefer execution evidence
+over the written predicate as the primary justification when both exist.
+
+### 20.4 Exception
+
+For trivial actions with no path predicate (typo fixes, mechanical
+replacements, narrow formatting), state briefly that no guard is in play
+and proceed. "I did not find one" alone is not sufficient.
