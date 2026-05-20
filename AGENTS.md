@@ -1,8 +1,8 @@
 # Unified AI Assistant Rules — Strict Governance Edition (for Warp AI / Codex Agents)
 
-Version: 1.2.0
+Version: 1.3.0
 Created: 2026-02-08
-Updated: 2026-05-05
+Updated: 2026-05-19
 Status: ACTIVE
 
 This file contains the same universal rules as CLAUDE.md. See CLAUDE.md for the full text.
@@ -20,3 +20,5 @@ For the complete rule set, refer to: CLAUDE.md in this repository.
 **2026-04-17 (append-only pointer)**: See **CLAUDE.md SECTION 18** — PAL / OpenRouter / Cursor cost routing and model constraints.
 
 **2026-05-05 (append-only pointer)**: See **CLAUDE.md SECTION 19** — Multiple approaches and multiple evidence rule.
+
+**2026-05-19 (append-only pointer)**: See **CLAUDE.md SECTION 20** — Inquiry validity: path and predicate check.
